@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, url_for
 from flask.ext.script import Manager
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.moment import Moment
@@ -35,9 +35,9 @@ def index():
     name = None
     form = NameForm()
     if form.validate_on_submit():
-        name = form.name.data
+        session['name'] = form.name.data # helps apps remember things by storing user sessions at the client-side cookies
         form.name.data = ''
-    return render_template('index.html', form=form, name=name)
+    return render_template(url_for('index'))
 
 
 if __name__ == '__main__':
