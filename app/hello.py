@@ -5,9 +5,12 @@ from flask.ext.moment import Moment
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
+from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
+app.config['SQLALCHEMY_DATABASE_URI' ] =\'sqlite:///' + os.path.join(basedir, 'data.sqlite') #database url
+app.config['SQLALCHEMY_COMMIT_ON_TEARDWON']=True #enable automatic commits of database changes at the end of each request.
 
 manager = Manager(app)
 bootstrap = Bootstrap(app)
@@ -47,3 +50,5 @@ def index():
 
 if __name__ == '__main__':
     manager.run()
+
+
