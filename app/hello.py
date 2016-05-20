@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
 app.config['SQLALCHEMY_DATABASE_URI' ] =\'sqlite:///' + os.path.join(basedir, 'data.sqlite') #database url
 app.config['SQLALCHEMY_COMMIT_ON_TEARDWON']=True #enable automatic commits of database changes at the end of each request.
+db = SQLALchemy(app)
 
 manager = Manager(app)
 bootstrap = Bootstrap(app)
@@ -51,4 +52,19 @@ def index():
 if __name__ == '__main__':
     manager.run()
 
+    # database part
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Columns(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
 
+    def __repr__(self):
+        return '<Role %r>' % self.name
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True, index=True)
+
+    def__repr__(self):#give them a readable string representation that can be used for debugging and testing
+purposes.
+        return <'User %r>' %self.name
