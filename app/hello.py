@@ -35,7 +35,11 @@ def index():
     name = None
     form = NameForm()
     if form.validate_on_submit():
+        old_name = session.get('name') #gets the last name of the user
+        if old_name is not None and old_name != form.name.data: #gives the conditions of name
+            flash('looks like you have changed your name')# response given if the name is not found
         session['name'] = form.name.data # helps apps remember things by storing user sessions at the client-side cookies
+        form.name.data=''
         return render_template(url_for('index'))
     return render_template('index.html', form=form, name=session.get('name'))
 
